@@ -17,7 +17,7 @@
             height: 100%;
             margin: 0;
             display: flex;
-            justify-content: flex-start; /* Aligns content at the top */
+            justify-content: flex-start;
             align-items: center;
             flex-direction: column;
             background-color: black;
@@ -35,7 +35,7 @@
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
-            margin-top: 20px; /* Moves the heading closer to the top */
+            margin-top: 20px;
             border-right: 0.1em solid;
             animation: blink 0.75s step-end infinite;
         }
@@ -80,15 +80,16 @@
     <div id="vouch-container"></div>
 
     <script>
-        // Function to fetch and display vouches
+        // Function to load vouches from the vouches.json file
         async function loadVouches() {
             try {
-                const response = await fetch('vouches.json');
+                const response = await fetch('vouches.json'); // Fetch vouches from the JSON file
                 const vouches = await response.json();
 
                 const vouchContainer = document.getElementById('vouch-container');
                 vouchContainer.innerHTML = ''; // Clear current content
 
+                // Loop through each vouch and display it
                 vouches.forEach(vouch => {
                     const vouchDiv = document.createElement('div');
                     vouchDiv.classList.add('vouch');
@@ -106,11 +107,15 @@
             }
         }
 
-        // Load vouches when the page is loaded
+        // Load initial vouches when the page loads
         window.onload = loadVouches;
+
+        // Optional: Set an interval to refresh the vouches every 10 seconds
+        setInterval(loadVouches, 10000);
     </script>
 </body>
 </html>
+
 
     <meta property="og:title" content="Eagle">
     <meta property="og:description" content="Eagle.lol The Best Da Hood Script.">
