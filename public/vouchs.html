@@ -80,38 +80,41 @@
     <div id="vouch-container"></div>
 
     <script>
-        // Function to load vouches from the vouches.json file
-        async function loadVouches() {
-            try {
-                const response = await fetch('vouches.json'); // Fetch vouches from the JSON file
-                const vouches = await response.json();
+// Function to load vouches from the vouches.json file
+async function loadVouches() {
+    try {
+        // Add a timestamp to the URL to prevent caching
+        const timestamp = new Date().getTime();
+        const response = await fetch(`vouches.json?timestamp=${timestamp}`); // Append the timestamp
+        const vouches = await response.json();
 
-                const vouchContainer = document.getElementById('vouch-container');
-                vouchContainer.innerHTML = ''; // Clear current content
+        const vouchContainer = document.getElementById('vouch-container');
+        vouchContainer.innerHTML = ''; // Clear current content
 
-                // Loop through each vouch and display it
-                vouches.forEach(vouch => {
-                    const vouchDiv = document.createElement('div');
-                    vouchDiv.classList.add('vouch');
+        // Loop through each vouch and display it
+        vouches.forEach(vouch => {
+            const vouchDiv = document.createElement('div');
+            vouchDiv.classList.add('vouch');
 
-                    vouchDiv.innerHTML = `
-                        <img src="${vouch.avatar}" alt="${vouch.username}">
-                        <p><strong>${vouch.username}</strong> - ${vouch.stars}</p>
-                        <p>${vouch.message}</p>
-                    `;
+            vouchDiv.innerHTML = `
+                <img src="${vouch.avatar}" alt="${vouch.username}">
+                <p><strong>${vouch.username}</strong> - ${vouch.stars}</p>
+                <p>${vouch.message}</p>
+            `;
 
-                    vouchContainer.appendChild(vouchDiv);
-                });
-            } catch (error) {
-                console.error('Error loading vouches:', error);
-            }
-        }
+            vouchContainer.appendChild(vouchDiv);
+        });
+    } catch (error) {
+        console.error('Error loading vouches:', error);
+    }
+}
 
-        // Load initial vouches when the page loads
-        window.onload = loadVouches;
+// Load initial vouches when the page loads
+window.onload = loadVouches;
 
-        // Optional: Set an interval to refresh the vouches every 10 seconds
-        setInterval(loadVouches, 10000);
+// Optional: Set an interval to refresh the vouches every 10 seconds
+setInterval(loadVouches, 10000);
+
     </script>
 </body>
 </html>
